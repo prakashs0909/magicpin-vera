@@ -1,0 +1,42 @@
+{
+  "merchant_id": "m_047_bharti_pharmacie_lucknow",
+  "category_slug": "pharmacies",
+  "identity": {
+    "name": "Wellness Cart",
+    "city": "Lucknow",
+    "locality": "Vibhuti Khand",
+    "place_id": "ChIJ_VIBHUTI_KHAND_PHARMACIES_047",
+    "verified": true,
+    "languages": [
+      "en",
+      "hi"
+    ],
+    "owner_first_name": "Bharti",
+    "established_year": 2017
+  },
+  "subscription": {
+    "status": "expired",
+    "plan": "Pro",
+    "days_remaining": 0,
+    "days_since_expiry": 52
+  },
+  "performance": {
+    "window_days": 30,
+    "views": 5822,
+    "calls": 42,
+    "directions": 96,
+    "ctr": 0.046,
+    "leads": 24,
+    "delta_7d": {
+      "views_pct": 0.04,
+      "calls_pct": 0.14
+    }
+  },
+  "offers": [],
+  "conversation_history": [],
+  "customer_aggregate": {
+    "total_unique_ytd": 1724
+  },
+  "signals": [],
+  "review_themes": []
+}

@@ -1,0 +1,15 @@
+{
+  "id": "trg_026_research_digest_m_011_dr_vikram_dent",
+  "scope": "merchant",
+  "kind": "research_digest",
+  "source": "external",
+  "merchant_id": "m_011_dr_vikram_dentist_hyderabad",
+  "customer_id": null,
+  "payload": {
+    "placeholder": true,
+    "metric_or_topic": "research_digest"
+  },
+  "urgency": 1,
+  "suppression_key": "research_digest:m_011_dr_vikram_dentist_hyderabad:gen_26",
+  "expires_at": "2026-06-30T00:00:00Z"
+}

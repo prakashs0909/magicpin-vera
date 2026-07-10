@@ -1,0 +1,43 @@
+{
+  "merchant_id": "m_012_dr_tara_dentist_chennai",
+  "category_slug": "dentists",
+  "identity": {
+    "name": "Crown Dental",
+    "city": "Chennai",
+    "locality": "Tambaram",
+    "place_id": "ChIJ_TAMBARAM_DENTISTS_012",
+    "verified": true,
+    "languages": [
+      "en",
+      "hi",
+      "ta"
+    ],
+    "owner_first_name": "Dr. Tara",
+    "established_year": 2023
+  },
+  "subscription": {
+    "status": "active",
+    "plan": "Pro",
+    "days_remaining": 104,
+    "days_since_expiry": null
+  },
+  "performance": {
+    "window_days": 30,
+    "views": 3118,
+    "calls": 23,
+    "directions": 59,
+    "ctr": 0.031,
+    "leads": 16,
+    "delta_7d": {
+      "views_pct": 0.1,
+      "calls_pct": 0.12
+    }
+  },
+  "offers": [],
+  "conversation_history": [],
+  "customer_aggregate": {
+    "total_unique_ytd": 636
+  },
+  "signals": [],
+  "review_themes": []
+}

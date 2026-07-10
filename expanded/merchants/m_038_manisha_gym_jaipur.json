@@ -1,0 +1,42 @@
+{
+  "merchant_id": "m_038_manisha_gym_jaipur",
+  "category_slug": "gyms",
+  "identity": {
+    "name": "Vyayam Yoga",
+    "city": "Jaipur",
+    "locality": "Bani Park",
+    "place_id": "ChIJ_BANI_PARK_GYMS_038",
+    "verified": true,
+    "languages": [
+      "en",
+      "hi"
+    ],
+    "owner_first_name": "Manisha",
+    "established_year": 2014
+  },
+  "subscription": {
+    "status": "active",
+    "plan": "Pro",
+    "days_remaining": 19,
+    "days_since_expiry": null
+  },
+  "performance": {
+    "window_days": 30,
+    "views": 1706,
+    "calls": 12,
+    "directions": 30,
+    "ctr": 0.028,
+    "leads": 5,
+    "delta_7d": {
+      "views_pct": 0.18,
+      "calls_pct": -0.23
+    }
+  },
+  "offers": [],
+  "conversation_history": [],
+  "customer_aggregate": {
+    "total_unique_ytd": 952
+  },
+  "signals": [],
+  "review_themes": []
+}

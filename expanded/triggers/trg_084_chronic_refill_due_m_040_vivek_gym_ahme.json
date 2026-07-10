@@ -1,0 +1,15 @@
+{
+  "id": "trg_084_chronic_refill_due_m_040_vivek_gym_ahme",
+  "scope": "customer",
+  "kind": "chronic_refill_due",
+  "source": "internal",
+  "merchant_id": "m_040_vivek_gym_ahmedabad",
+  "customer_id": "c_159_reyansh_for_m_040_vivek_gym_ahmedabad",
+  "payload": {
+    "placeholder": true,
+    "metric_or_topic": "chronic_refill_due"
+  },
+  "urgency": 2,
+  "suppression_key": "chronic_refill_due:m_040_vivek_gym_ahmedabad:gen_84",
+  "expires_at": "2026-06-30T00:00:00Z"
+}

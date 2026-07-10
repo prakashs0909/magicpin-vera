@@ -1,0 +1,42 @@
+{
+  "merchant_id": "m_031_karim_restaurant_pune",
+  "category_slug": "restaurants",
+  "identity": {
+    "name": "Kabab Junction",
+    "city": "Pune",
+    "locality": "Hadapsar",
+    "place_id": "ChIJ_HADAPSAR_RESTAURANTS_031",
+    "verified": true,
+    "languages": [
+      "en",
+      "hi"
+    ],
+    "owner_first_name": "Karim",
+    "established_year": 2019
+  },
+  "subscription": {
+    "status": "active",
+    "plan": "Pro",
+    "days_remaining": 210,
+    "days_since_expiry": null
+  },
+  "performance": {
+    "window_days": 30,
+    "views": 4359,
+    "calls": 24,
+    "directions": 51,
+    "ctr": 0.032,
+    "leads": 4,
+    "delta_7d": {
+      "views_pct": 0.01,
+      "calls_pct": 0.09
+    }
+  },
+  "offers": [],
+  "conversation_history": [],
+  "customer_aggregate": {
+    "total_unique_ytd": 186
+  },
+  "signals": [],
+  "review_themes": []
+}

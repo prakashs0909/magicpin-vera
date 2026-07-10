@@ -1,0 +1,42 @@
+{
+  "merchant_id": "m_033_anand_restaurant_lucknow",
+  "category_slug": "restaurants",
+  "identity": {
+    "name": "Chai Point Cafe",
+    "city": "Lucknow",
+    "locality": "Indira Nagar",
+    "place_id": "ChIJ_INDIRA_NAGAR_RESTAURANTS_033",
+    "verified": false,
+    "languages": [
+      "en",
+      "hi"
+    ],
+    "owner_first_name": "Anand",
+    "established_year": 2021
+  },
+  "subscription": {
+    "status": "active",
+    "plan": "Pro",
+    "days_remaining": 217,
+    "days_since_expiry": null
+  },
+  "performance": {
+    "window_days": 30,
+    "views": 902,
+    "calls": 4,
+    "directions": 23,
+    "ctr": 0.044,
+    "leads": 4,
+    "delta_7d": {
+      "views_pct": -0.05,
+      "calls_pct": -0.08
+    }
+  },
+  "offers": [],
+  "conversation_history": [],
+  "customer_aggregate": {
+    "total_unique_ytd": 1774
+  },
+  "signals": [],
+  "review_themes": []
+}

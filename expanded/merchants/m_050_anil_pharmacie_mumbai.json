@@ -1,0 +1,43 @@
+{
+  "merchant_id": "m_050_anil_pharmacie_mumbai",
+  "category_slug": "pharmacies",
+  "identity": {
+    "name": "Healthwell Pharmacy",
+    "city": "Mumbai",
+    "locality": "Powai",
+    "place_id": "ChIJ_POWAI_PHARMACIES_050",
+    "verified": true,
+    "languages": [
+      "en",
+      "hi",
+      "mr"
+    ],
+    "owner_first_name": "Anil",
+    "established_year": 2021
+  },
+  "subscription": {
+    "status": "active",
+    "plan": "Pro",
+    "days_remaining": 172,
+    "days_since_expiry": null
+  },
+  "performance": {
+    "window_days": 30,
+    "views": 1383,
+    "calls": 17,
+    "directions": 44,
+    "ctr": 0.023,
+    "leads": 2,
+    "delta_7d": {
+      "views_pct": -0.22,
+      "calls_pct": -0.07
+    }
+  },
+  "offers": [],
+  "conversation_history": [],
+  "customer_aggregate": {
+    "total_unique_ytd": 1613
+  },
+  "signals": [],
+  "review_themes": []
+}

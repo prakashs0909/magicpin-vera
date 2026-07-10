@@ -1,0 +1,43 @@
+{
+  "merchant_id": "m_036_karan_gym_bangalore",
+  "category_slug": "gyms",
+  "identity": {
+    "name": "Iron Forge Fitness",
+    "city": "Bangalore",
+    "locality": "Sarjapur",
+    "place_id": "ChIJ_SARJAPUR_GYMS_036",
+    "verified": true,
+    "languages": [
+      "en",
+      "hi",
+      "kn"
+    ],
+    "owner_first_name": "Karan",
+    "established_year": 2019
+  },
+  "subscription": {
+    "status": "active",
+    "plan": "Pro",
+    "days_remaining": 17,
+    "days_since_expiry": null
+  },
+  "performance": {
+    "window_days": 30,
+    "views": 4546,
+    "calls": 33,
+    "directions": 79,
+    "ctr": 0.023,
+    "leads": 15,
+    "delta_7d": {
+      "views_pct": 0.12,
+      "calls_pct": -0.17
+    }
+  },
+  "offers": [],
+  "conversation_history": [],
+  "customer_aggregate": {
+    "total_unique_ytd": 502
+  },
+  "signals": [],
+  "review_themes": []
+}

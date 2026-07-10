@@ -1,0 +1,43 @@
+{
+  "merchant_id": "m_029_mukesh_restaurant_hyderabad",
+  "category_slug": "restaurants",
+  "identity": {
+    "name": "Pizza Spot",
+    "city": "Hyderabad",
+    "locality": "Jubilee Hills",
+    "place_id": "ChIJ_JUBILEE_HILLS_RESTAURANTS_029",
+    "verified": false,
+    "languages": [
+      "en",
+      "hi",
+      "te"
+    ],
+    "owner_first_name": "Mukesh",
+    "established_year": 2010
+  },
+  "subscription": {
+    "status": "active",
+    "plan": "Pro",
+    "days_remaining": 240,
+    "days_since_expiry": null
+  },
+  "performance": {
+    "window_days": 30,
+    "views": 5392,
+    "calls": 32,
+    "directions": 78,
+    "ctr": 0.035,
+    "leads": 19,
+    "delta_7d": {
+      "views_pct": 0.06,
+      "calls_pct": 0.12
+    }
+  },
+  "offers": [],
+  "conversation_history": [],
+  "customer_aggregate": {
+    "total_unique_ytd": 722
+  },
+  "signals": [],
+  "review_themes": []
+}

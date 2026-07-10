@@ -1,0 +1,43 @@
+{
+  "merchant_id": "m_042_vivek_gym_bangalore",
+  "category_slug": "gyms",
+  "identity": {
+    "name": "Strength Co.",
+    "city": "Bangalore",
+    "locality": "Koramangala",
+    "place_id": "ChIJ_KORAMANGALA_GYMS_042",
+    "verified": true,
+    "languages": [
+      "en",
+      "hi",
+      "kn"
+    ],
+    "owner_first_name": "Vivek",
+    "established_year": 2017
+  },
+  "subscription": {
+    "status": "active",
+    "plan": "Pro",
+    "days_remaining": 66,
+    "days_since_expiry": null
+  },
+  "performance": {
+    "window_days": 30,
+    "views": 5223,
+    "calls": 39,
+    "directions": 91,
+    "ctr": 0.037,
+    "leads": 4,
+    "delta_7d": {
+      "views_pct": -0.06,
+      "calls_pct": 0.03
+    }
+  },
+  "offers": [],
+  "conversation_history": [],
+  "customer_aggregate": {
+    "total_unique_ytd": 1632
+  },
+  "signals": [],
+  "review_themes": []
+}

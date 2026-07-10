@@ -1,0 +1,15 @@
+{
+  "id": "trg_072_customer_lapsed_soft_m_011_dr_vikram_dent",
+  "scope": "customer",
+  "kind": "customer_lapsed_soft",
+  "source": "internal",
+  "merchant_id": "m_011_dr_vikram_dentist_hyderabad",
+  "customer_id": "c_044_kavya_for_m_011_dr_vikram_dentist_hyderabad",
+  "payload": {
+    "placeholder": true,
+    "metric_or_topic": "customer_lapsed_soft"
+  },
+  "urgency": 3,
+  "suppression_key": "customer_lapsed_soft:m_011_dr_vikram_dentist_hyderabad:gen_72",
+  "expires_at": "2026-06-30T00:00:00Z"
+}

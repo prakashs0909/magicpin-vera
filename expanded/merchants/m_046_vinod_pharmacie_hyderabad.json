@@ -1,0 +1,43 @@
+{
+  "merchant_id": "m_046_vinod_pharmacie_hyderabad",
+  "category_slug": "pharmacies",
+  "identity": {
+    "name": "Family Health Pharmacy",
+    "city": "Hyderabad",
+    "locality": "Kapra",
+    "place_id": "ChIJ_KAPRA_PHARMACIES_046",
+    "verified": true,
+    "languages": [
+      "en",
+      "hi",
+      "te"
+    ],
+    "owner_first_name": "Vinod",
+    "established_year": 2010
+  },
+  "subscription": {
+    "status": "active",
+    "plan": "Pro",
+    "days_remaining": 202,
+    "days_since_expiry": null
+  },
+  "performance": {
+    "window_days": 30,
+    "views": 1817,
+    "calls": 2,
+    "directions": 18,
+    "ctr": 0.055,
+    "leads": 0,
+    "delta_7d": {
+      "views_pct": -0.03,
+      "calls_pct": 0.21
+    }
+  },
+  "offers": [],
+  "conversation_history": [],
+  "customer_aggregate": {
+    "total_unique_ytd": 1829
+  },
+  "signals": [],
+  "review_themes": []
+}

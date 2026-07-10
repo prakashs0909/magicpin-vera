@@ -1,0 +1,43 @@
+{
+  "merchant_id": "m_043_mohit_pharmacie_bangalore",
+  "category_slug": "pharmacies",
+  "identity": {
+    "name": "QuickRx Pharmacy",
+    "city": "Bangalore",
+    "locality": "JP Nagar",
+    "place_id": "ChIJ_JP_NAGAR_PHARMACIES_043",
+    "verified": true,
+    "languages": [
+      "en",
+      "hi",
+      "kn"
+    ],
+    "owner_first_name": "Mohit",
+    "established_year": 2023
+  },
+  "subscription": {
+    "status": "active",
+    "plan": "Pro",
+    "days_remaining": 268,
+    "days_since_expiry": null
+  },
+  "performance": {
+    "window_days": 30,
+    "views": 3932,
+    "calls": 48,
+    "directions": 117,
+    "ctr": 0.026,
+    "leads": 28,
+    "delta_7d": {
+      "views_pct": -0.06,
+      "calls_pct": -0.23
+    }
+  },
+  "offers": [],
+  "conversation_history": [],
+  "customer_aggregate": {
+    "total_unique_ytd": 1773
+  },
+  "signals": [],
+  "review_themes": []
+}

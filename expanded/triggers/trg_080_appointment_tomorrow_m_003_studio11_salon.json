@@ -1,0 +1,15 @@
+{
+  "id": "trg_080_appointment_tomorrow_m_003_studio11_salon",
+  "scope": "customer",
+  "kind": "appointment_tomorrow",
+  "source": "internal",
+  "merchant_id": "m_003_studio11_salon_hyderabad",
+  "customer_id": "c_021_tara_for_m_003_studio11_salon_hyderabad",
+  "payload": {
+    "placeholder": true,
+    "metric_or_topic": "appointment_tomorrow"
+  },
+  "urgency": 2,
+  "suppression_key": "appointment_tomorrow:m_003_studio11_salon_hyderabad:gen_80",
+  "expires_at": "2026-06-30T00:00:00Z"
+}

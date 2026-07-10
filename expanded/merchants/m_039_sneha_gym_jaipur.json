@@ -1,0 +1,42 @@
+{
+  "merchant_id": "m_039_sneha_gym_jaipur",
+  "category_slug": "gyms",
+  "identity": {
+    "name": "Pulse Studio",
+    "city": "Jaipur",
+    "locality": "Mansarovar",
+    "place_id": "ChIJ_MANSAROVAR_GYMS_039",
+    "verified": true,
+    "languages": [
+      "en",
+      "hi"
+    ],
+    "owner_first_name": "Sneha",
+    "established_year": 2014
+  },
+  "subscription": {
+    "status": "active",
+    "plan": "Pro",
+    "days_remaining": 231,
+    "days_since_expiry": null
+  },
+  "performance": {
+    "window_days": 30,
+    "views": 4304,
+    "calls": 3,
+    "directions": 15,
+    "ctr": 0.033,
+    "leads": 2,
+    "delta_7d": {
+      "views_pct": -0.13,
+      "calls_pct": 0.28
+    }
+  },
+  "offers": [],
+  "conversation_history": [],
+  "customer_aggregate": {
+    "total_unique_ytd": 949
+  },
+  "signals": [],
+  "review_themes": []
+}

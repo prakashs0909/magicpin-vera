@@ -1,0 +1,43 @@
+{
+  "merchant_id": "m_020_sushma_salon_bangalore",
+  "category_slug": "salons",
+  "identity": {
+    "name": "The Beauty Bar",
+    "city": "Bangalore",
+    "locality": "Bellandur",
+    "place_id": "ChIJ_BELLANDUR_SALONS_020",
+    "verified": true,
+    "languages": [
+      "en",
+      "hi",
+      "kn"
+    ],
+    "owner_first_name": "Sushma",
+    "established_year": 2018
+  },
+  "subscription": {
+    "status": "trial",
+    "plan": "Trial",
+    "days_remaining": 8,
+    "days_since_expiry": null
+  },
+  "performance": {
+    "window_days": 30,
+    "views": 1883,
+    "calls": 17,
+    "directions": 43,
+    "ctr": 0.016,
+    "leads": 5,
+    "delta_7d": {
+      "views_pct": 0.08,
+      "calls_pct": -0.23
+    }
+  },
+  "offers": [],
+  "conversation_history": [],
+  "customer_aggregate": {
+    "total_unique_ytd": 1736
+  },
+  "signals": [],
+  "review_themes": []
+}

@@ -1,0 +1,15 @@
+{
+  "id": "trg_030_research_digest_m_035_roshni_gym_che",
+  "scope": "merchant",
+  "kind": "research_digest",
+  "source": "external",
+  "merchant_id": "m_035_roshni_gym_chennai",
+  "customer_id": null,
+  "payload": {
+    "placeholder": true,
+    "metric_or_topic": "research_digest"
+  },
+  "urgency": 1,
+  "suppression_key": "research_digest:m_035_roshni_gym_chennai:gen_30",
+  "expires_at": "2026-06-30T00:00:00Z"
+}

@@ -1,0 +1,15 @@
+{
+  "id": "trg_087_trial_followup_m_041_deepak_gym_luc",
+  "scope": "customer",
+  "kind": "trial_followup",
+  "source": "internal",
+  "merchant_id": "m_041_deepak_gym_lucknow",
+  "customer_id": "c_164_arjun_for_m_041_deepak_gym_lucknow",
+  "payload": {
+    "placeholder": true,
+    "metric_or_topic": "trial_followup"
+  },
+  "urgency": 2,
+  "suppression_key": "trial_followup:m_041_deepak_gym_lucknow:gen_87",
+  "expires_at": "2026-06-30T00:00:00Z"
+}

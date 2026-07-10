@@ -1,0 +1,43 @@
+{
+  "merchant_id": "m_034_mukesh_restaurant_bangalore",
+  "category_slug": "restaurants",
+  "identity": {
+    "name": "Pizza Spot",
+    "city": "Bangalore",
+    "locality": "JP Nagar",
+    "place_id": "ChIJ_JP_NAGAR_RESTAURANTS_034",
+    "verified": true,
+    "languages": [
+      "en",
+      "hi",
+      "kn"
+    ],
+    "owner_first_name": "Mukesh",
+    "established_year": 2016
+  },
+  "subscription": {
+    "status": "active",
+    "plan": "Pro",
+    "days_remaining": 220,
+    "days_since_expiry": null
+  },
+  "performance": {
+    "window_days": 30,
+    "views": 2363,
+    "calls": 13,
+    "directions": 27,
+    "ctr": 0.057,
+    "leads": 8,
+    "delta_7d": {
+      "views_pct": 0.08,
+      "calls_pct": 0.21
+    }
+  },
+  "offers": [],
+  "conversation_history": [],
+  "customer_aggregate": {
+    "total_unique_ytd": 1276
+  },
+  "signals": [],
+  "review_themes": []
+}

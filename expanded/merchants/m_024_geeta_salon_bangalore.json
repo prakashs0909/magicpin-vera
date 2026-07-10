@@ -1,0 +1,43 @@
+{
+  "merchant_id": "m_024_geeta_salon_bangalore",
+  "category_slug": "salons",
+  "identity": {
+    "name": "Glow Up Salon",
+    "city": "Bangalore",
+    "locality": "JP Nagar",
+    "place_id": "ChIJ_JP_NAGAR_SALONS_024",
+    "verified": true,
+    "languages": [
+      "en",
+      "hi",
+      "kn"
+    ],
+    "owner_first_name": "Geeta",
+    "established_year": 2023
+  },
+  "subscription": {
+    "status": "active",
+    "plan": "Pro",
+    "days_remaining": 36,
+    "days_since_expiry": null
+  },
+  "performance": {
+    "window_days": 30,
+    "views": 775,
+    "calls": 9,
+    "directions": 38,
+    "ctr": 0.038,
+    "leads": 5,
+    "delta_7d": {
+      "views_pct": -0.01,
+      "calls_pct": -0.25
+    }
+  },
+  "offers": [],
+  "conversation_history": [],
+  "customer_aggregate": {
+    "total_unique_ytd": 213
+  },
+  "signals": [],
+  "review_themes": []
+}

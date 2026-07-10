@@ -1,0 +1,15 @@
+{
+  "id": "trg_090_trial_followup_m_015_dr_rajan_denti",
+  "scope": "customer",
+  "kind": "trial_followup",
+  "source": "internal",
+  "merchant_id": "m_015_dr_rajan_dentist_chandigarh",
+  "customer_id": "c_059_riya_for_m_015_dr_rajan_dentist_chandigarh",
+  "payload": {
+    "placeholder": true,
+    "metric_or_topic": "trial_followup"
+  },
+  "urgency": 2,
+  "suppression_key": "trial_followup:m_015_dr_rajan_dentist_chandigarh:gen_90",
+  "expires_at": "2026-06-30T00:00:00Z"
+}

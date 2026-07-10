@@ -1,0 +1,406 @@
+{
+  "info": {
+    "name": "Vera Bot — magicpin AI Challenge",
+    "description": "Complete API test suite for the Vera AI merchant assistant bot.\n\nBase URL: http://localhost:8080\n\nEndpoints:\n1. GET  /v1/healthz     — Liveness probe\n2. GET  /v1/metadata    — Bot identity\n3. POST /v1/context     — Push context (category/merchant/customer/trigger)\n4. POST /v1/tick        — Periodic wake-up; bot decides what to send\n5. POST /v1/reply       — Handle merchant/customer reply\n6. POST /v1/teardown    — Wipe state (end of test)\n\nRun in this order:\n  Phase 1 → Healthz → Metadata\n  Phase 2 → Push Category → Push Merchant → Push Customer → Push Trigger\n  Phase 3 → Tick (bot composes message)\n  Phase 4 → Reply (multi-turn conversation)\n  Phase 5 → Teardown",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Phase 1 — Warmup",
+      "item": [
+        {
+          "name": "GET /v1/healthz",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/v1/healthz",
+              "host": ["{{baseUrl}}"],
+              "path": ["v1", "healthz"]
+            },
+            "description": "Liveness probe. Returns uptime and count of loaded contexts.\n\ncURL:\ncurl -s http://localhost:8080/v1/healthz"
+          },
+          "response": []
+        },
+        {
+          "name": "GET /v1/metadata",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/v1/metadata",
+              "host": ["{{baseUrl}}"],
+              "path": ["v1", "metadata"]
+            },
+            "description": "Bot identity — team name, model, approach.\n\ncURL:\ncurl -s http://localhost:8080/v1/metadata"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Phase 2 — Context Push",
+      "item": [
+        {
+          "name": "POST /v1/context — Category (dentists)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"scope\": \"category\",\n  \"context_id\": \"dentists\",\n  \"version\": 1,\n  \"delivered_at\": \"2026-04-26T09:45:00Z\",\n  \"payload\": {\n    \"slug\": \"dentists\",\n    \"display_name\": \"Dentists\",\n    \"voice\": {\n      \"tone\": \"peer_clinical\",\n      \"register\": \"respectful_collegial\",\n      \"code_mix\": \"hindi_english_natural\",\n      \"vocab_allowed\": [\"fluoride varnish\", \"scaling\", \"caries\", \"occlusion\", \"bruxism\"],\n      \"vocab_taboo\": [\"guaranteed\", \"100% safe\", \"completely cure\", \"miracle\"]\n    },\n    \"offer_catalog\": [\n      { \"id\": \"den_001\", \"title\": \"Dental Cleaning @ \\u20b9299\", \"value\": \"299\", \"audience\": \"new_user\", \"type\": \"service_at_price\" },\n      { \"id\": \"den_002\", \"title\": \"Free Consultation\", \"value\": \"0\", \"audience\": \"new_user\", \"type\": \"free_service\" },\n      { \"id\": \"den_003\", \"title\": \"Teeth Whitening @ \\u20b91,499\", \"value\": \"1499\", \"audience\": \"new_user\", \"type\": \"service_at_price\" }\n    ],\n    \"peer_stats\": {\n      \"scope\": \"metro_solo_practices_2026\",\n      \"avg_rating\": 4.4,\n      \"avg_review_count\": 62,\n      \"avg_views_30d\": 1820,\n      \"avg_ctr\": 0.030\n    },\n    \"digest\": [\n      {\n        \"id\": \"d_2026W17_jida_fluoride\",\n        \"kind\": \"research\",\n        \"title\": \"3-month fluoride varnish recall outperforms 6-month for high-risk adult caries\",\n        \"source\": \"JIDA Oct 2026, p.14\",\n        \"trial_n\": 2100,\n        \"patient_segment\": \"high_risk_adults\",\n        \"summary\": \"Multi-center Indian trial shows 38% lower caries recurrence with 3-month vs 6-month recall in adults with active decay history.\",\n        \"actionable\": \"Reassess recall interval for adults flagged high-risk in your charting\"\n      },\n      {\n        \"id\": \"d_2026W17_dci_radiograph\",\n        \"kind\": \"compliance\",\n        \"title\": \"DCI revised radiograph dose limits effective 2026-12-15\",\n        \"source\": \"Dental Council of India circular 2026-11-04\",\n        \"summary\": \"Maximum dose per IOPA exposure drops from 1.5 mSv to 1.0 mSv.\",\n        \"actionable\": \"Audit your X-ray setup before Dec 15\"\n      }\n    ],\n    \"patient_content_library\": [\n      { \"id\": \"pc_oral_heart\", \"title\": \"3 things your teeth tell you about your heart\", \"channel\": \"whatsapp\", \"length_seconds\": 90 }\n    ],\n    \"seasonal_beats\": [\n      { \"month_range\": \"Nov-Feb\", \"note\": \"exam-stress bruxism spike\" },\n      { \"month_range\": \"Oct-Dec\", \"note\": \"wedding whitening peak\" }\n    ],\n    \"trend_signals\": [\n      { \"query\": \"clear aligners delhi\", \"delta_yoy\": 0.62, \"segment_age\": \"28-45\", \"skew\": \"female\" }\n    ]\n  }\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/v1/context",
+              "host": ["{{baseUrl}}"],
+              "path": ["v1", "context"]
+            },
+            "description": "Push the dentists CategoryContext. Returns accepted=true with ack_id.\n\ncURL:\ncurl -s -X POST http://localhost:8080/v1/context \\\n  -H 'Content-Type: application/json' \\\n  -d '{\"scope\":\"category\",\"context_id\":\"dentists\",\"version\":1,\"delivered_at\":\"2026-04-26T09:45:00Z\",\"payload\":{\"slug\":\"dentists\",\"voice\":{\"tone\":\"peer_clinical\",\"vocab_taboo\":[\"guaranteed\"]},\"offer_catalog\":[{\"id\":\"den_001\",\"title\":\"Dental Cleaning @ ₹299\",\"value\":\"299\"}],\"peer_stats\":{\"avg_ctr\":0.030},\"digest\":[{\"id\":\"d_2026W17_jida_fluoride\",\"kind\":\"research\",\"title\":\"3-month fluoride recall cuts caries 38% better\",\"source\":\"JIDA Oct 2026, p.14\",\"trial_n\":2100}],\"patient_content_library\":[],\"seasonal_beats\":[],\"trend_signals\":[]}}'"
+          },
+          "response": []
+        },
+        {
+          "name": "POST /v1/context — Merchant (Dr. Meera)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"scope\": \"merchant\",\n  \"context_id\": \"m_001_drmeera_dentist_delhi\",\n  \"version\": 1,\n  \"delivered_at\": \"2026-04-26T09:46:00Z\",\n  \"payload\": {\n    \"merchant_id\": \"m_001_drmeera_dentist_delhi\",\n    \"category_slug\": \"dentists\",\n    \"identity\": {\n      \"name\": \"Dr. Meera's Dental Clinic\",\n      \"city\": \"Delhi\",\n      \"locality\": \"Lajpat Nagar\",\n      \"place_id\": \"ChIJ_LAJPATNAGAR_DENTIST_001\",\n      \"verified\": true,\n      \"languages\": [\"en\", \"hi\"],\n      \"owner_first_name\": \"Meera\",\n      \"established_year\": 2018\n    },\n    \"subscription\": { \"status\": \"active\", \"plan\": \"Pro\", \"days_remaining\": 82 },\n    \"performance\": {\n      \"window_days\": 30,\n      \"views\": 2410,\n      \"calls\": 18,\n      \"directions\": 45,\n      \"ctr\": 0.021,\n      \"leads\": 9,\n      \"delta_7d\": { \"views_pct\": 0.18, \"calls_pct\": -0.05 }\n    },\n    \"offers\": [\n      { \"id\": \"o_meera_001\", \"title\": \"Dental Cleaning @ \\u20b9299\", \"status\": \"active\" },\n      { \"id\": \"o_meera_002\", \"title\": \"Deep Cleaning @ \\u20b9499\", \"status\": \"expired\" }\n    ],\n    \"conversation_history\": [\n      { \"ts\": \"2026-04-24T10:12:00Z\", \"from\": \"vera\", \"body\": \"Profile audit done — your photos are 8/10, but Google posts are stale (22 days ago). Want me to draft 3 posts?\", \"engagement\": \"merchant_replied\" },\n      { \"ts\": \"2026-04-24T10:18:00Z\", \"from\": \"merchant\", \"body\": \"Yes please, focus on whitening and aligners\", \"engagement\": \"intent_action\" }\n    ],\n    \"customer_aggregate\": {\n      \"total_unique_ytd\": 540,\n      \"lapsed_180d_plus\": 78,\n      \"retention_6mo_pct\": 0.38,\n      \"high_risk_adult_count\": 124\n    },\n    \"signals\": [\"stale_posts:22d\", \"ctr_below_peer_median\", \"high_risk_adult_cohort\", \"engaged_in_last_48h\"],\n    \"review_themes\": [\n      { \"theme\": \"wait_time\", \"sentiment\": \"neg\", \"occurrences_30d\": 3, \"common_quote\": \"had to wait 30 min on Sunday afternoon\" },\n      { \"theme\": \"doctor_manner\", \"sentiment\": \"pos\", \"occurrences_30d\": 5, \"common_quote\": \"Dr. Meera explains everything patiently\" }\n    ]\n  }\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/v1/context",
+              "host": ["{{baseUrl}}"],
+              "path": ["v1", "context"]
+            },
+            "description": "Push Dr. Meera's MerchantContext. Note category_slug must match a pushed category."
+          },
+          "response": []
+        },
+        {
+          "name": "POST /v1/context — Customer (Priya)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"scope\": \"customer\",\n  \"context_id\": \"c_001_priya_for_m001\",\n  \"version\": 1,\n  \"delivered_at\": \"2026-04-26T09:47:00Z\",\n  \"payload\": {\n    \"customer_id\": \"c_001_priya_for_m001\",\n    \"merchant_id\": \"m_001_drmeera_dentist_delhi\",\n    \"identity\": {\n      \"name\": \"Priya\",\n      \"phone_redacted\": \"<phone>\",\n      \"language_pref\": \"hi-en mix\",\n      \"age_band\": \"25-35\"\n    },\n    \"relationship\": {\n      \"first_visit\": \"2025-11-04\",\n      \"last_visit\": \"2026-05-12\",\n      \"visits_total\": 4,\n      \"services_received\": [\"cleaning\", \"cleaning\", \"whitening\", \"cleaning\"],\n      \"lifetime_value\": 1696\n    },\n    \"state\": \"lapsed_soft\",\n    \"preferences\": {\n      \"preferred_slots\": \"weekday_evening\",\n      \"channel\": \"whatsapp\",\n      \"reminder_opt_in\": true\n    },\n    \"consent\": {\n      \"opted_in_at\": \"2025-11-04\",\n      \"scope\": [\"recall_reminders\", \"appointment_reminders\"]\n    }\n  }\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/v1/context",
+              "host": ["{{baseUrl}}"],
+              "path": ["v1", "context"]
+            },
+            "description": "Push Priya's CustomerContext (lapsed_soft patient of Dr. Meera)."
+          },
+          "response": []
+        },
+        {
+          "name": "POST /v1/context — Trigger (research_digest)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"scope\": \"trigger\",\n  \"context_id\": \"trg_001_research_digest_dentists\",\n  \"version\": 1,\n  \"delivered_at\": \"2026-04-26T10:00:00Z\",\n  \"payload\": {\n    \"id\": \"trg_001_research_digest_dentists\",\n    \"scope\": \"merchant\",\n    \"kind\": \"research_digest\",\n    \"source\": \"external\",\n    \"merchant_id\": \"m_001_drmeera_dentist_delhi\",\n    \"customer_id\": null,\n    \"payload\": {\n      \"category\": \"dentists\",\n      \"top_item_id\": \"d_2026W17_jida_fluoride\"\n    },\n    \"urgency\": 2,\n    \"suppression_key\": \"research:dentists:2026-W17\",\n    \"expires_at\": \"2026-05-03T00:00:00Z\"\n  }\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/v1/context",
+              "host": ["{{baseUrl}}"],
+              "path": ["v1", "context"]
+            },
+            "description": "Push a research_digest trigger for Dr. Meera. Links to the JIDA fluoride digest item."
+          },
+          "response": []
+        },
+        {
+          "name": "POST /v1/context — Trigger (recall_due for Priya)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"scope\": \"trigger\",\n  \"context_id\": \"trg_003_recall_due_priya\",\n  \"version\": 1,\n  \"delivered_at\": \"2026-04-26T10:05:00Z\",\n  \"payload\": {\n    \"id\": \"trg_003_recall_due_priya\",\n    \"scope\": \"customer\",\n    \"kind\": \"recall_due\",\n    \"source\": \"internal\",\n    \"merchant_id\": \"m_001_drmeera_dentist_delhi\",\n    \"customer_id\": \"c_001_priya_for_m001\",\n    \"payload\": {\n      \"service_due\": \"6_month_cleaning\",\n      \"last_service_date\": \"2026-05-12\",\n      \"due_date\": \"2026-11-12\",\n      \"available_slots\": [\n        { \"iso\": \"2026-11-05T18:00:00+05:30\", \"label\": \"Wed 5 Nov, 6pm\" },\n        { \"iso\": \"2026-11-06T17:00:00+05:30\", \"label\": \"Thu 6 Nov, 5pm\" }\n      ]\n    },\n    \"urgency\": 3,\n    \"suppression_key\": \"recall:c_001_priya_for_m001:6mo\",\n    \"expires_at\": \"2026-11-30T00:00:00Z\"\n  }\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/v1/context",
+              "host": ["{{baseUrl}}"],
+              "path": ["v1", "context"]
+            },
+            "description": "Push a customer-scoped recall_due trigger for Priya. Bot should compose a merchant_on_behalf message with slot options."
+          },
+          "response": []
+        },
+        {
+          "name": "POST /v1/context — Trigger (perf_dip)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"scope\": \"trigger\",\n  \"context_id\": \"trg_004_perf_dip_meera\",\n  \"version\": 1,\n  \"delivered_at\": \"2026-04-26T10:10:00Z\",\n  \"payload\": {\n    \"id\": \"trg_004_perf_dip_meera\",\n    \"scope\": \"merchant\",\n    \"kind\": \"perf_dip\",\n    \"source\": \"internal\",\n    \"merchant_id\": \"m_001_drmeera_dentist_delhi\",\n    \"customer_id\": null,\n    \"payload\": {\n      \"metric\": \"calls\",\n      \"delta_pct\": -0.50,\n      \"window\": \"7d\",\n      \"vs_baseline\": 12\n    },\n    \"urgency\": 4,\n    \"suppression_key\": \"perf_dip:m_001:calls:2026-W17\",\n    \"expires_at\": \"2026-05-10T00:00:00Z\"\n  }\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/v1/context",
+              "host": ["{{baseUrl}}"],
+              "path": ["v1", "context"]
+            },
+            "description": "Push a perf_dip trigger (calls dropped 50%). Bot should use loss aversion framing."
+          },
+          "response": []
+        },
+        {
+          "name": "POST /v1/context — Stale Version (expect 409)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"scope\": \"category\",\n  \"context_id\": \"dentists\",\n  \"version\": 0,\n  \"delivered_at\": \"2026-04-26T09:00:00Z\",\n  \"payload\": { \"slug\": \"dentists\" }\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/v1/context",
+              "host": ["{{baseUrl}}"],
+              "path": ["v1", "context"]
+            },
+            "description": "Send version 0 for dentists (already at v1) — expect 409 stale_version response."
+          },
+          "response": []
+        },
+        {
+          "name": "POST /v1/context — Invalid Scope (expect 400)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"scope\": \"invalid_scope\",\n  \"context_id\": \"test\",\n  \"version\": 1,\n  \"delivered_at\": \"2026-04-26T09:00:00Z\",\n  \"payload\": {}\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/v1/context",
+              "host": ["{{baseUrl}}"],
+              "path": ["v1", "context"]
+            },
+            "description": "Send invalid scope — expect 400 invalid_scope response."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Phase 3 — Tick (Bot Initiates)",
+      "item": [
+        {
+          "name": "POST /v1/tick — No Triggers",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"now\": \"2026-04-26T10:30:00Z\",\n  \"available_triggers\": []\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/v1/tick",
+              "host": ["{{baseUrl}}"],
+              "path": ["v1", "tick"]
+            },
+            "description": "Tick with no triggers — bot should return empty actions array.\n\ncURL:\ncurl -s -X POST http://localhost:8080/v1/tick \\\n  -H 'Content-Type: application/json' \\\n  -d '{\"now\":\"2026-04-26T10:30:00Z\",\"available_triggers\":[]}'"
+          },
+          "response": []
+        },
+        {
+          "name": "POST /v1/tick — Research Digest (Dr. Meera) 🤖",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"now\": \"2026-04-26T10:30:00Z\",\n  \"available_triggers\": [\"trg_001_research_digest_dentists\"]\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/v1/tick",
+              "host": ["{{baseUrl}}"],
+              "path": ["v1", "tick"]
+            },
+            "description": "⚠️ Requires GEMINI_API_KEY in .env\n\nBot composes a research_digest message for Dr. Meera using JIDA fluoride trial data.\nExpect: clinical peer tone, 38%/2100 patients citation, open_ended CTA.\n\ncURL:\ncurl -s -X POST http://localhost:8080/v1/tick \\\n  -H 'Content-Type: application/json' \\\n  -d '{\"now\":\"2026-04-26T10:30:00Z\",\"available_triggers\":[\"trg_001_research_digest_dentists\"]}'"
+          },
+          "response": []
+        },
+        {
+          "name": "POST /v1/tick — Recall Due (Priya) 🤖",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"now\": \"2026-04-26T10:35:00Z\",\n  \"available_triggers\": [\"trg_003_recall_due_priya\"]\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/v1/tick",
+              "host": ["{{baseUrl}}"],
+              "path": ["v1", "tick"]
+            },
+            "description": "⚠️ Requires GEMINI_API_KEY in .env\n\nBot composes a customer-facing recall message for Priya, sent on behalf of Dr. Meera's clinic.\nExpect: send_as=merchant_on_behalf, hi-en mix, slot options (Reply 1 / Reply 2)."
+          },
+          "response": []
+        },
+        {
+          "name": "POST /v1/tick — Perf Dip (Dr. Meera) 🤖",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"now\": \"2026-04-26T10:40:00Z\",\n  \"available_triggers\": [\"trg_004_perf_dip_meera\"]\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/v1/tick",
+              "host": ["{{baseUrl}}"],
+              "path": ["v1", "tick"]
+            },
+            "description": "⚠️ Requires GEMINI_API_KEY in .env\n\nBot composes a loss-aversion message about calls dropping 50%.\nExpect: specific numbers, offer to fix, binary YES/STOP CTA."
+          },
+          "response": []
+        },
+        {
+          "name": "POST /v1/tick — Multiple Triggers 🤖",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"now\": \"2026-04-26T10:45:00Z\",\n  \"available_triggers\": [\n    \"trg_001_research_digest_dentists\",\n    \"trg_003_recall_due_priya\",\n    \"trg_004_perf_dip_meera\"\n  ]\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/v1/tick",
+              "host": ["{{baseUrl}}"],
+              "path": ["v1", "tick"]
+            },
+            "description": "⚠️ Requires GEMINI_API_KEY in .env\n\nMultiple triggers in one tick — bot should return up to 3 actions (one per trigger).\nNote: research_digest trigger is already suppressed from the previous tick call."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Phase 4 — Reply (Multi-turn)",
+      "item": [
+        {
+          "name": "POST /v1/reply — Merchant says YES 🤖",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"conversation_id\": \"conv_m_001_drmeera_dentist_delhi_trg_001_research_digest_dentists\",\n  \"merchant_id\": \"m_001_drmeera_dentist_delhi\",\n  \"customer_id\": null,\n  \"from_role\": \"merchant\",\n  \"message\": \"Yes, send me the abstract. Also draft the patient WhatsApp please.\",\n  \"received_at\": \"2026-04-26T10:46:00Z\",\n  \"turn_number\": 2\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/v1/reply",
+              "host": ["{{baseUrl}}"],
+              "path": ["v1", "reply"]
+            },
+            "description": "⚠️ Run after the research_digest tick.\nMerchant accepts — bot should switch to action mode immediately (no more qualifying questions).\n\nconversation_id must match what /v1/tick returned.\n\ncURL:\ncurl -s -X POST http://localhost:8080/v1/reply \\\n  -H 'Content-Type: application/json' \\\n  -d '{\"conversation_id\":\"conv_m_001_drmeera_dentist_delhi_trg_001_research_digest_dentists\",\"merchant_id\":\"m_001_drmeera_dentist_delhi\",\"from_role\":\"merchant\",\"message\":\"Yes, send me the abstract\",\"received_at\":\"2026-04-26T10:46:00Z\",\"turn_number\":2}'"
+          },
+          "response": []
+        },
+        {
+          "name": "POST /v1/reply — Merchant says NO",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"conversation_id\": \"conv_m_001_drmeera_dentist_delhi_trg_001_research_digest_dentists\",\n  \"merchant_id\": \"m_001_drmeera_dentist_delhi\",\n  \"customer_id\": null,\n  \"from_role\": \"merchant\",\n  \"message\": \"Nahin chahiye, abhi busy hoon\",\n  \"received_at\": \"2026-04-26T10:47:00Z\",\n  \"turn_number\": 2\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/v1/reply",
+              "host": ["{{baseUrl}}"],
+              "path": ["v1", "reply"]
+            },
+            "description": "Merchant rejects in Hindi — bot should detect rejection and return action=end with a polite exit.\nExpect: action=end, graceful Hindi/Hinglish farewell."
+          },
+          "response": []
+        },
+        {
+          "name": "POST /v1/reply — Auto-reply simulation",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"conversation_id\": \"conv_m_001_drmeera_dentist_delhi_trg_001_research_digest_dentists\",\n  \"merchant_id\": \"m_001_drmeera_dentist_delhi\",\n  \"customer_id\": null,\n  \"from_role\": \"merchant\",\n  \"message\": \"Aapki jaankari ke liye bahut-bahut shukriya. Main aapki yeh sabhi baatein aur sujhaav hamari team tak pahuncha deti hoon.\",\n  \"received_at\": \"2026-04-26T10:48:00Z\",\n  \"turn_number\": 2\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/v1/reply",
+              "host": ["{{baseUrl}}"],
+              "path": ["v1", "reply"]
+            },
+            "description": "Classic WhatsApp Business auto-reply (Hindi). Bot should detect it and attempt one retry — NOT exit immediately.\nExpect: action=send with a re-engagement message addressed to owner/manager."
+          },
+          "response": []
+        },
+        {
+          "name": "POST /v1/reply — Merchant asks a question 🤖",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"conversation_id\": \"conv_m_001_drmeera_dentist_delhi_trg_001_research_digest_dentists\",\n  \"merchant_id\": \"m_001_drmeera_dentist_delhi\",\n  \"customer_id\": null,\n  \"from_role\": \"merchant\",\n  \"message\": \"Yeh fluoride varnish kahan se milega? Aur kitna costly hai?\",\n  \"received_at\": \"2026-04-26T10:49:00Z\",\n  \"turn_number\": 2\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/v1/reply",
+              "host": ["{{baseUrl}}"],
+              "path": ["v1", "reply"]
+            },
+            "description": "⚠️ Requires GEMINI_API_KEY\n\nMerchant asks a specific question in Hinglish. Bot should answer specifically using context data."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Phase 5 — Teardown",
+      "item": [
+        {
+          "name": "POST /v1/teardown",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/v1/teardown",
+              "host": ["{{baseUrl}}"],
+              "path": ["v1", "teardown"]
+            },
+            "description": "Wipe all state. Run at end of test session.\n\ncURL:\ncurl -s -X POST http://localhost:8080/v1/teardown"
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

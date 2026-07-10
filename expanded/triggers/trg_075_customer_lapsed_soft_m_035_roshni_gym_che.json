@@ -1,0 +1,15 @@
+{
+  "id": "trg_075_customer_lapsed_soft_m_035_roshni_gym_che",
+  "scope": "customer",
+  "kind": "customer_lapsed_soft",
+  "source": "internal",
+  "merchant_id": "m_035_roshni_gym_chennai",
+  "customer_id": "c_137_diya_for_m_035_roshni_gym_chennai",
+  "payload": {
+    "placeholder": true,
+    "metric_or_topic": "customer_lapsed_soft"
+  },
+  "urgency": 3,
+  "suppression_key": "customer_lapsed_soft:m_035_roshni_gym_chennai:gen_75",
+  "expires_at": "2026-06-30T00:00:00Z"
+}

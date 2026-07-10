@@ -1,0 +1,42 @@
+{
+  "merchant_id": "m_015_dr_rajan_dentist_chandigarh",
+  "category_slug": "dentists",
+  "identity": {
+    "name": "City Dental Clinic",
+    "city": "Chandigarh",
+    "locality": "Manimajra",
+    "place_id": "ChIJ_MANIMAJRA_DENTISTS_015",
+    "verified": true,
+    "languages": [
+      "en",
+      "hi"
+    ],
+    "owner_first_name": "Dr. Rajan",
+    "established_year": 2016
+  },
+  "subscription": {
+    "status": "trial",
+    "plan": "Trial",
+    "days_remaining": 11,
+    "days_since_expiry": null
+  },
+  "performance": {
+    "window_days": 30,
+    "views": 2608,
+    "calls": 2,
+    "directions": 16,
+    "ctr": 0.042,
+    "leads": 2,
+    "delta_7d": {
+      "views_pct": 0.11,
+      "calls_pct": 0.12
+    }
+  },
+  "offers": [],
+  "conversation_history": [],
+  "customer_aggregate": {
+    "total_unique_ytd": 1966
+  },
+  "signals": [],
+  "review_themes": []
+}

@@ -1,0 +1,43 @@
+{
+  "merchant_id": "m_013_dr_priya_dentist_chennai",
+  "category_slug": "dentists",
+  "identity": {
+    "name": "Family Dental Centre",
+    "city": "Chennai",
+    "locality": "Anna Nagar",
+    "place_id": "ChIJ_ANNA_NAGAR_DENTISTS_013",
+    "verified": false,
+    "languages": [
+      "en",
+      "hi",
+      "ta"
+    ],
+    "owner_first_name": "Dr. Priya",
+    "established_year": 2017
+  },
+  "subscription": {
+    "status": "active",
+    "plan": "Pro",
+    "days_remaining": 6,
+    "days_since_expiry": null
+  },
+  "performance": {
+    "window_days": 30,
+    "views": 2649,
+    "calls": 7,
+    "directions": 24,
+    "ctr": 0.041,
+    "leads": 2,
+    "delta_7d": {
+      "views_pct": -0.21,
+      "calls_pct": -0.06
+    }
+  },
+  "offers": [],
+  "conversation_history": [],
+  "customer_aggregate": {
+    "total_unique_ytd": 990
+  },
+  "signals": [],
+  "review_themes": []
+}

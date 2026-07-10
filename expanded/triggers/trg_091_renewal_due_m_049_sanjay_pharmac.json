@@ -1,0 +1,15 @@
+{
+  "id": "trg_091_renewal_due_m_049_sanjay_pharmac",
+  "scope": "merchant",
+  "kind": "renewal_due",
+  "source": "internal",
+  "merchant_id": "m_049_sanjay_pharmacie_chandigarh",
+  "customer_id": null,
+  "payload": {
+    "placeholder": true,
+    "metric_or_topic": "renewal_due"
+  },
+  "urgency": 4,
+  "suppression_key": "renewal_due:m_049_sanjay_pharmacie_chandigarh:gen_91",
+  "expires_at": "2026-06-30T00:00:00Z"
+}

@@ -1,0 +1,42 @@
+{
+  "merchant_id": "m_028_ravi_restaurant_delhi",
+  "category_slug": "restaurants",
+  "identity": {
+    "name": "Veg Bowl",
+    "city": "Delhi",
+    "locality": "Dwarka",
+    "place_id": "ChIJ_DWARKA_RESTAURANTS_028",
+    "verified": true,
+    "languages": [
+      "en",
+      "hi"
+    ],
+    "owner_first_name": "Ravi",
+    "established_year": 2012
+  },
+  "subscription": {
+    "status": "active",
+    "plan": "Pro",
+    "days_remaining": 259,
+    "days_since_expiry": null
+  },
+  "performance": {
+    "window_days": 30,
+    "views": 614,
+    "calls": 2,
+    "directions": 13,
+    "ctr": 0.026,
+    "leads": 1,
+    "delta_7d": {
+      "views_pct": 0.17,
+      "calls_pct": -0.17
+    }
+  },
+  "offers": [],
+  "conversation_history": [],
+  "customer_aggregate": {
+    "total_unique_ytd": 303
+  },
+  "signals": [],
+  "review_themes": []
+}

@@ -1,0 +1,15 @@
+{
+  "id": "trg_070_recall_due_m_037_pooja_gym_bang",
+  "scope": "customer",
+  "kind": "recall_due",
+  "source": "internal",
+  "merchant_id": "m_037_pooja_gym_bangalore",
+  "customer_id": "c_146_aditya_for_m_037_pooja_gym_bangalore",
+  "payload": {
+    "placeholder": true,
+    "metric_or_topic": "recall_due"
+  },
+  "urgency": 3,
+  "suppression_key": "recall_due:m_037_pooja_gym_bangalore:gen_70",
+  "expires_at": "2026-06-30T00:00:00Z"
+}

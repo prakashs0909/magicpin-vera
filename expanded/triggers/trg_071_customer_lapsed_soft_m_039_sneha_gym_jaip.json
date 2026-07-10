@@ -1,0 +1,15 @@
+{
+  "id": "trg_071_customer_lapsed_soft_m_039_sneha_gym_jaip",
+  "scope": "customer",
+  "kind": "customer_lapsed_soft",
+  "source": "internal",
+  "merchant_id": "m_039_sneha_gym_jaipur",
+  "customer_id": "c_154_saanvi_for_m_039_sneha_gym_jaipur",
+  "payload": {
+    "placeholder": true,
+    "metric_or_topic": "customer_lapsed_soft"
+  },
+  "urgency": 3,
+  "suppression_key": "customer_lapsed_soft:m_039_sneha_gym_jaipur:gen_71",
+  "expires_at": "2026-06-30T00:00:00Z"
+}

@@ -1,0 +1,43 @@
+{
+  "merchant_id": "m_021_anita_salon_hyderabad",
+  "category_slug": "salons",
+  "identity": {
+    "name": "Anita's Beauty Studio",
+    "city": "Hyderabad",
+    "locality": "Kondapur",
+    "place_id": "ChIJ_KONDAPUR_SALONS_021",
+    "verified": true,
+    "languages": [
+      "en",
+      "hi",
+      "te"
+    ],
+    "owner_first_name": "Anita",
+    "established_year": 2017
+  },
+  "subscription": {
+    "status": "active",
+    "plan": "Pro",
+    "days_remaining": 217,
+    "days_since_expiry": null
+  },
+  "performance": {
+    "window_days": 30,
+    "views": 3137,
+    "calls": 16,
+    "directions": 41,
+    "ctr": 0.032,
+    "leads": 7,
+    "delta_7d": {
+      "views_pct": -0.25,
+      "calls_pct": -0.22
+    }
+  },
+  "offers": [],
+  "conversation_history": [],
+  "customer_aggregate": {
+    "total_unique_ytd": 107
+  },
+  "signals": [],
+  "review_themes": []
+}

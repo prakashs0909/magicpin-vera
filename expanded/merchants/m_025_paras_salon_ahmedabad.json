@@ -1,0 +1,42 @@
+{
+  "merchant_id": "m_025_paras_salon_ahmedabad",
+  "category_slug": "salons",
+  "identity": {
+    "name": "Paras Hair & Beauty",
+    "city": "Ahmedabad",
+    "locality": "Naranpura",
+    "place_id": "ChIJ_NARANPURA_SALONS_025",
+    "verified": true,
+    "languages": [
+      "en",
+      "hi"
+    ],
+    "owner_first_name": "Paras",
+    "established_year": 2023
+  },
+  "subscription": {
+    "status": "expired",
+    "plan": "Pro",
+    "days_remaining": 0,
+    "days_since_expiry": 37
+  },
+  "performance": {
+    "window_days": 30,
+    "views": 2496,
+    "calls": 28,
+    "directions": 76,
+    "ctr": 0.058,
+    "leads": 2,
+    "delta_7d": {
+      "views_pct": -0.15,
+      "calls_pct": -0.02
+    }
+  },
+  "offers": [],
+  "conversation_history": [],
+  "customer_aggregate": {
+    "total_unique_ytd": 1136
+  },
+  "signals": [],
+  "review_themes": []
+}

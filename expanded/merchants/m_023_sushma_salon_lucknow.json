@@ -1,0 +1,42 @@
+{
+  "merchant_id": "m_023_sushma_salon_lucknow",
+  "category_slug": "salons",
+  "identity": {
+    "name": "The Beauty Bar",
+    "city": "Lucknow",
+    "locality": "Mahanagar",
+    "place_id": "ChIJ_MAHANAGAR_SALONS_023",
+    "verified": true,
+    "languages": [
+      "en",
+      "hi"
+    ],
+    "owner_first_name": "Sushma",
+    "established_year": 2018
+  },
+  "subscription": {
+    "status": "active",
+    "plan": "Pro",
+    "days_remaining": 227,
+    "days_since_expiry": null
+  },
+  "performance": {
+    "window_days": 30,
+    "views": 5993,
+    "calls": 33,
+    "directions": 88,
+    "ctr": 0.027,
+    "leads": 12,
+    "delta_7d": {
+      "views_pct": -0.11,
+      "calls_pct": 0.24
+    }
+  },
+  "offers": [],
+  "conversation_history": [],
+  "customer_aggregate": {
+    "total_unique_ytd": 484
+  },
+  "signals": [],
+  "review_themes": []
+}

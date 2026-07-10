@@ -1,0 +1,15 @@
+{
+  "id": "trg_079_appointment_tomorrow_m_041_deepak_gym_luc",
+  "scope": "customer",
+  "kind": "appointment_tomorrow",
+  "source": "internal",
+  "merchant_id": "m_041_deepak_gym_lucknow",
+  "customer_id": "c_162_reyansh_for_m_041_deepak_gym_lucknow",
+  "payload": {
+    "placeholder": true,
+    "metric_or_topic": "appointment_tomorrow"
+  },
+  "urgency": 2,
+  "suppression_key": "appointment_tomorrow:m_041_deepak_gym_lucknow:gen_79",
+  "expires_at": "2026-06-30T00:00:00Z"
+}

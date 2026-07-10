@@ -1,0 +1,15 @@
+{
+  "id": "trg_058_competitor_opened_m_014_dr_neha_dentis",
+  "scope": "merchant",
+  "kind": "competitor_opened",
+  "source": "external",
+  "merchant_id": "m_014_dr_neha_dentist_jaipur",
+  "customer_id": null,
+  "payload": {
+    "placeholder": true,
+    "metric_or_topic": "competitor_opened"
+  },
+  "urgency": 2,
+  "suppression_key": "competitor_opened:m_014_dr_neha_dentist_jaipur:gen_58",
+  "expires_at": "2026-06-30T00:00:00Z"
+}

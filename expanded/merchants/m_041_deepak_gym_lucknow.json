@@ -1,0 +1,42 @@
+{
+  "merchant_id": "m_041_deepak_gym_lucknow",
+  "category_slug": "gyms",
+  "identity": {
+    "name": "Body Mechanics",
+    "city": "Lucknow",
+    "locality": "Alambagh",
+    "place_id": "ChIJ_ALAMBAGH_GYMS_041",
+    "verified": false,
+    "languages": [
+      "en",
+      "hi"
+    ],
+    "owner_first_name": "Deepak",
+    "established_year": 2021
+  },
+  "subscription": {
+    "status": "active",
+    "plan": "Pro",
+    "days_remaining": 227,
+    "days_since_expiry": null
+  },
+  "performance": {
+    "window_days": 30,
+    "views": 1544,
+    "calls": 9,
+    "directions": 34,
+    "ctr": 0.023,
+    "leads": 2,
+    "delta_7d": {
+      "views_pct": 0.08,
+      "calls_pct": 0.16
+    }
+  },
+  "offers": [],
+  "conversation_history": [],
+  "customer_aggregate": {
+    "total_unique_ytd": 725
+  },
+  "signals": [],
+  "review_themes": []
+}

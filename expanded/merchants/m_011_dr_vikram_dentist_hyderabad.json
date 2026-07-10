@@ -1,0 +1,43 @@
+{
+  "merchant_id": "m_011_dr_vikram_dentist_hyderabad",
+  "category_slug": "dentists",
+  "identity": {
+    "name": "Smile Crafters",
+    "city": "Hyderabad",
+    "locality": "Kondapur",
+    "place_id": "ChIJ_KONDAPUR_DENTISTS_011",
+    "verified": true,
+    "languages": [
+      "en",
+      "hi",
+      "te"
+    ],
+    "owner_first_name": "Dr. Vikram",
+    "established_year": 2021
+  },
+  "subscription": {
+    "status": "active",
+    "plan": "Pro",
+    "days_remaining": 274,
+    "days_since_expiry": null
+  },
+  "performance": {
+    "window_days": 30,
+    "views": 4531,
+    "calls": 18,
+    "directions": 62,
+    "ctr": 0.037,
+    "leads": 5,
+    "delta_7d": {
+      "views_pct": 0,
+      "calls_pct": 0.21
+    }
+  },
+  "offers": [],
+  "conversation_history": [],
+  "customer_aggregate": {
+    "total_unique_ytd": 265
+  },
+  "signals": [],
+  "review_themes": []
+}

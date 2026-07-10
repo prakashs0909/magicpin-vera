@@ -1,0 +1,15 @@
+{
+  "id": "trg_034_perf_dip_m_009_apollo_pharmac",
+  "scope": "merchant",
+  "kind": "perf_dip",
+  "source": "internal",
+  "merchant_id": "m_009_apollo_pharmacy_jaipur",
+  "customer_id": null,
+  "payload": {
+    "placeholder": true,
+    "metric_or_topic": "perf_dip"
+  },
+  "urgency": 3,
+  "suppression_key": "perf_dip:m_009_apollo_pharmacy_jaipur:gen_34",
+  "expires_at": "2026-06-30T00:00:00Z"
+}

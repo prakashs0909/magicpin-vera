@@ -1,0 +1,15 @@
+{
+  "id": "trg_033_perf_dip_m_034_mukesh_restaur",
+  "scope": "merchant",
+  "kind": "perf_dip",
+  "source": "internal",
+  "merchant_id": "m_034_mukesh_restaurant_bangalore",
+  "customer_id": null,
+  "payload": {
+    "placeholder": true,
+    "metric_or_topic": "perf_dip"
+  },
+  "urgency": 3,
+  "suppression_key": "perf_dip:m_034_mukesh_restaurant_bangalore:gen_33",
+  "expires_at": "2026-06-30T00:00:00Z"
+}

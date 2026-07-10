@@ -1,0 +1,15 @@
+{
+  "id": "trg_086_trial_followup_m_007_powerhouse_gym",
+  "scope": "customer",
+  "kind": "trial_followup",
+  "source": "internal",
+  "merchant_id": "m_007_powerhouse_gym_bangalore",
+  "customer_id": "c_009_arjun_for_m007",
+  "payload": {
+    "placeholder": true,
+    "metric_or_topic": "trial_followup"
+  },
+  "urgency": 2,
+  "suppression_key": "trial_followup:m_007_powerhouse_gym_bangalore:gen_86",
+  "expires_at": "2026-06-30T00:00:00Z"
+}

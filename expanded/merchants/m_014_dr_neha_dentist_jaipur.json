@@ -1,0 +1,42 @@
+{
+  "merchant_id": "m_014_dr_neha_dentist_jaipur",
+  "category_slug": "dentists",
+  "identity": {
+    "name": "Pearl Dental Studio",
+    "city": "Jaipur",
+    "locality": "Bani Park",
+    "place_id": "ChIJ_BANI_PARK_DENTISTS_014",
+    "verified": true,
+    "languages": [
+      "en",
+      "hi"
+    ],
+    "owner_first_name": "Dr. Neha",
+    "established_year": 2015
+  },
+  "subscription": {
+    "status": "active",
+    "plan": "Pro",
+    "days_remaining": 39,
+    "days_since_expiry": null
+  },
+  "performance": {
+    "window_days": 30,
+    "views": 5849,
+    "calls": 23,
+    "directions": 63,
+    "ctr": 0.028,
+    "leads": 3,
+    "delta_7d": {
+      "views_pct": 0.13,
+      "calls_pct": -0.23
+    }
+  },
+  "offers": [],
+  "conversation_history": [],
+  "customer_aggregate": {
+    "total_unique_ytd": 1499
+  },
+  "signals": [],
+  "review_themes": []
+}

@@ -1,0 +1,42 @@
+{
+  "merchant_id": "m_049_sanjay_pharmacie_chandigarh",
+  "category_slug": "pharmacies",
+  "identity": {
+    "name": "TrueCare Medicos",
+    "city": "Chandigarh",
+    "locality": "Sector 22",
+    "place_id": "ChIJ_SECTOR_22_PHARMACIES_049",
+    "verified": false,
+    "languages": [
+      "en",
+      "hi"
+    ],
+    "owner_first_name": "Sanjay",
+    "established_year": 2023
+  },
+  "subscription": {
+    "status": "active",
+    "plan": "Pro",
+    "days_remaining": 238,
+    "days_since_expiry": null
+  },
+  "performance": {
+    "window_days": 30,
+    "views": 1674,
+    "calls": 4,
+    "directions": 20,
+    "ctr": 0.018,
+    "leads": 3,
+    "delta_7d": {
+      "views_pct": -0.29,
+      "calls_pct": -0.06
+    }
+  },
+  "offers": [],
+  "conversation_history": [],
+  "customer_aggregate": {
+    "total_unique_ytd": 1924
+  },
+  "signals": [],
+  "review_themes": []
+}

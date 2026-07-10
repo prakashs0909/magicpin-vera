@@ -1,0 +1,15 @@
+{
+  "id": "trg_073_customer_lapsed_soft_m_021_anita_salon_hy",
+  "scope": "customer",
+  "kind": "customer_lapsed_soft",
+  "source": "internal",
+  "merchant_id": "m_021_anita_salon_hyderabad",
+  "customer_id": "c_082_riya_for_m_021_anita_salon_hyderabad",
+  "payload": {
+    "placeholder": true,
+    "metric_or_topic": "customer_lapsed_soft"
+  },
+  "urgency": 3,
+  "suppression_key": "customer_lapsed_soft:m_021_anita_salon_hyderabad:gen_73",
+  "expires_at": "2026-06-30T00:00:00Z"
+}

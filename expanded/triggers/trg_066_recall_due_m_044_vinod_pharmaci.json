@@ -1,0 +1,15 @@
+{
+  "id": "trg_066_recall_due_m_044_vinod_pharmaci",
+  "scope": "customer",
+  "kind": "recall_due",
+  "source": "internal",
+  "merchant_id": "m_044_vinod_pharmacie_ahmedabad",
+  "customer_id": "c_175_anika_for_m_044_vinod_pharmacie_ahmedabad",
+  "payload": {
+    "placeholder": true,
+    "metric_or_topic": "recall_due"
+  },
+  "urgency": 3,
+  "suppression_key": "recall_due:m_044_vinod_pharmacie_ahmedabad:gen_66",
+  "expires_at": "2026-06-30T00:00:00Z"
+}

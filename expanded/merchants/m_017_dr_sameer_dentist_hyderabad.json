@@ -1,0 +1,43 @@
+{
+  "merchant_id": "m_017_dr_sameer_dentist_hyderabad",
+  "category_slug": "dentists",
+  "identity": {
+    "name": "Bright Smile Dental",
+    "city": "Hyderabad",
+    "locality": "Madhapur",
+    "place_id": "ChIJ_MADHAPUR_DENTISTS_017",
+    "verified": false,
+    "languages": [
+      "en",
+      "hi",
+      "te"
+    ],
+    "owner_first_name": "Dr. Sameer",
+    "established_year": 2013
+  },
+  "subscription": {
+    "status": "trial",
+    "plan": "Trial",
+    "days_remaining": 5,
+    "days_since_expiry": null
+  },
+  "performance": {
+    "window_days": 30,
+    "views": 5453,
+    "calls": 8,
+    "directions": 42,
+    "ctr": 0.018,
+    "leads": 5,
+    "delta_7d": {
+      "views_pct": 0.06,
+      "calls_pct": -0.06
+    }
+  },
+  "offers": [],
+  "conversation_history": [],
+  "customer_aggregate": {
+    "total_unique_ytd": 413
+  },
+  "signals": [],
+  "review_themes": []
+}

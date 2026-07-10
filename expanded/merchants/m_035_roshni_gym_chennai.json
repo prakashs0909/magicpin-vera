@@ -1,0 +1,43 @@
+{
+  "merchant_id": "m_035_roshni_gym_chennai",
+  "category_slug": "gyms",
+  "identity": {
+    "name": "Active Life Gym",
+    "city": "Chennai",
+    "locality": "Adyar",
+    "place_id": "ChIJ_ADYAR_GYMS_035",
+    "verified": true,
+    "languages": [
+      "en",
+      "hi",
+      "ta"
+    ],
+    "owner_first_name": "Roshni",
+    "established_year": 2022
+  },
+  "subscription": {
+    "status": "active",
+    "plan": "Pro",
+    "days_remaining": 282,
+    "days_since_expiry": null
+  },
+  "performance": {
+    "window_days": 30,
+    "views": 2667,
+    "calls": 12,
+    "directions": 42,
+    "ctr": 0.053,
+    "leads": 12,
+    "delta_7d": {
+      "views_pct": -0.07,
+      "calls_pct": 0.16
+    }
+  },
+  "offers": [],
+  "conversation_history": [],
+  "customer_aggregate": {
+    "total_unique_ytd": 404
+  },
+  "signals": [],
+  "review_themes": []
+}

@@ -1,0 +1,43 @@
+{
+  "merchant_id": "m_019_geeta_salon_chennai",
+  "category_slug": "salons",
+  "identity": {
+    "name": "Glow Up Salon",
+    "city": "Chennai",
+    "locality": "Anna Nagar",
+    "place_id": "ChIJ_ANNA_NAGAR_SALONS_019",
+    "verified": true,
+    "languages": [
+      "en",
+      "hi",
+      "ta"
+    ],
+    "owner_first_name": "Geeta",
+    "established_year": 2018
+  },
+  "subscription": {
+    "status": "active",
+    "plan": "Pro",
+    "days_remaining": 197,
+    "days_since_expiry": null
+  },
+  "performance": {
+    "window_days": 30,
+    "views": 4225,
+    "calls": 4,
+    "directions": 26,
+    "ctr": 0.048,
+    "leads": 3,
+    "delta_7d": {
+      "views_pct": -0.14,
+      "calls_pct": 0.09
+    }
+  },
+  "offers": [],
+  "conversation_history": [],
+  "customer_aggregate": {
+    "total_unique_ytd": 484
+  },
+  "signals": [],
+  "review_themes": []
+}

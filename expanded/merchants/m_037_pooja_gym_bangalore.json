@@ -1,0 +1,43 @@
+{
+  "merchant_id": "m_037_pooja_gym_bangalore",
+  "category_slug": "gyms",
+  "identity": {
+    "name": "Bend & Burn",
+    "city": "Bangalore",
+    "locality": "BTM Layout",
+    "place_id": "ChIJ_BTM_LAYOUT_GYMS_037",
+    "verified": true,
+    "languages": [
+      "en",
+      "hi",
+      "kn"
+    ],
+    "owner_first_name": "Pooja",
+    "established_year": 2015
+  },
+  "subscription": {
+    "status": "active",
+    "plan": "Pro",
+    "days_remaining": 206,
+    "days_since_expiry": null
+  },
+  "performance": {
+    "window_days": 30,
+    "views": 1261,
+    "calls": 14,
+    "directions": 58,
+    "ctr": 0.046,
+    "leads": 1,
+    "delta_7d": {
+      "views_pct": -0.08,
+      "calls_pct": 0.28
+    }
+  },
+  "offers": [],
+  "conversation_history": [],
+  "customer_aggregate": {
+    "total_unique_ytd": 1017
+  },
+  "signals": [],
+  "review_themes": []
+}

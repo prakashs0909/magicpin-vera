@@ -1,0 +1,42 @@
+{
+  "merchant_id": "m_045_anil_pharmacie_delhi",
+  "category_slug": "pharmacies",
+  "identity": {
+    "name": "Healthwell Pharmacy",
+    "city": "Delhi",
+    "locality": "Lajpat Nagar",
+    "place_id": "ChIJ_LAJPAT_NAGAR_PHARMACIES_045",
+    "verified": true,
+    "languages": [
+      "en",
+      "hi"
+    ],
+    "owner_first_name": "Anil",
+    "established_year": 2017
+  },
+  "subscription": {
+    "status": "active",
+    "plan": "Pro",
+    "days_remaining": 245,
+    "days_since_expiry": null
+  },
+  "performance": {
+    "window_days": 30,
+    "views": 4395,
+    "calls": 37,
+    "directions": 101,
+    "ctr": 0.03,
+    "leads": 6,
+    "delta_7d": {
+      "views_pct": -0.12,
+      "calls_pct": -0.09
+    }
+  },
+  "offers": [],
+  "conversation_history": [],
+  "customer_aggregate": {
+    "total_unique_ytd": 288
+  },
+  "signals": [],
+  "review_themes": []
+}
