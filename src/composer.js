@@ -22,10 +22,10 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 async function callLLM(systemPrompt, userPrompt) {
   const model = genAI.getGenerativeModel({
-    model: 'gemini-1.5-flash',
+    model: process.env.GEMINI_MODEL || 'gemini-2.5-flash',
     generationConfig: {
       temperature: 0,           // Deterministic — required by brief §7.1
-      maxOutputTokens: 1024,
+      responseMimeType: 'application/json',
     },
     systemInstruction: systemPrompt,
   });
@@ -52,6 +52,7 @@ HARD RULES (violating any = score 0 for that dimension):
 8. Use PEER tone, not promotional. Dentists/doctors get clinical language. Salons get warm/lifestyle.
 9. Keep it concise — WhatsApp messages, not emails
 10. CTA lands in the LAST sentence
+11. STRICT LENGTH LIMIT: The message body must be strictly under 320 characters.
 
 COMPULSION LEVERS (use at least 1 per message):
 - Specificity: concrete number, date, source citation ("JIDA Oct 2026 p.14", "2,100 patients", "38% better")
@@ -64,7 +65,7 @@ COMPULSION LEVERS (use at least 1 per message):
 
 OUTPUT FORMAT (JSON only — no markdown, no prose outside JSON):
 {
-  "body": "the full WhatsApp message",
+  "body": "the full WhatsApp message (strictly under 320 characters)",
   "cta": "open_ended" | "binary_yes_stop" | "none",
   "send_as": "vera" | "merchant_on_behalf",
   "suppression_key": "unique dedup key",
@@ -420,6 +421,7 @@ function validateAndRepair(raw, trigger, merchant) {
   }
 
   if (!parsed) {
+    console.error('[validateAndRepair] JSON parse failed. Raw LLM response was:', raw);
     // Fallback structure if LLM returned garbage
     return {
       body: `Hi ${merchant.identity?.name}, quick update from Vera. Reply YES to continue or STOP to opt out.`,
@@ -453,6 +455,11 @@ function validateAndRepair(raw, trigger, merchant) {
   // Ensure body is non-empty
   if (!parsed.body || parsed.body.trim().length === 0) {
     parsed.body = `Hi ${merchant.identity?.name}, Vera here. Reply YES to continue.`;
+  }
+
+  // Enforce 320-character limit
+  if (parsed.body && parsed.body.length > 320) {
+    parsed.body = parsed.body.slice(0, 317) + '...';
   }
 
   // Ensure rationale is present
@@ -494,16 +501,18 @@ export async function compose(category, merchant, trigger, customer = null) {
 // REPLY COMPOSER (for multi-turn conversations)
 // ---------------------------------------------------------------------------
 
-const REPLY_SYSTEM_PROMPT = `You are Vera, magicpin's merchant AI assistant.
+const REPLY_MERCHANT_SYSTEM_PROMPT = `You are Vera, magicpin's merchant AI assistant.
 You are in a MULTI-TURN conversation with a merchant. Respond to their latest message.
 
 RULES:
-1. If they said YES/accept/chalega/go ahead/okay — switch to ACTION mode immediately. Don't ask more qualifying questions.
-2. If they asked a question — answer it specifically with data from contexts.
-3. If they said NO/stop/not interested/busy — gracefully end: "Samajh gayi, bilkul theek hai. Best wishes for your business! 🙂"
+1. If they say YES/accept/chalega/go ahead/okay — switch to ACTION mode immediately. Do not ask qualifying questions. Report the action taken (e.g., "I've updated your hours" or "I've drafted the offer and scheduled it for you!").
+2. If they ask a question — answer it specifically with data from contexts (e.g. peer stats, active offers, category guidelines).
+3. If they say NO/stop/not interested/busy — gracefully end: "Samajh gayi, bilkul theek hai. Kabhi zaroorat ho toh main hoon. Best wishes! 🙏"
 4. Keep it SHORT — 1-3 sentences max for a reply.
-5. Advance the conversation: each reply should move to a concrete next step.
-6. Match language of the merchant's message.
+5. Match the language/tone of the merchant's message.
+6. Support STOP / opt-out immediately by ending the conversation.
+7. Decline off-topic requests politely but firmly (e.g., if they ask for help with GST or personal questions: "Maafi chahungi, main sirf magicpin and Google profile related tasks mein help kar sakti hoon. Iske baare mein main nahi bata paungi.").
+8. STRICT LENGTH LIMIT: The reply body must be strictly under 320 characters.
 
 OUTPUT FORMAT (JSON only):
 {
@@ -514,32 +523,70 @@ OUTPUT FORMAT (JSON only):
   "rationale": "why this response"
 }`;
 
+const REPLY_CUSTOMER_SYSTEM_PROMPT = `You are the AI assistant for a merchant, replying to their customer on WhatsApp on behalf of the merchant.
+Speak as the business itself (e.g., "Dr. Meera's Dental Clinic" or "our clinic/salon"). Never introduce yourself as Vera.
+
+RULES:
+1. Confirm bookings: If the customer selected a slot (e.g., "Wed 5 Nov, 6pm") or asked to book, confirm the slot clearly using the details from the slot option they picked.
+2. If they ask a question about services/prices, answer using the merchant context and category catalogs. No fabrication.
+3. Be professional, warm, and concise (1-2 sentences).
+4. Match the language preference/tone of the customer's message (natural code-mix of Hindi/English is common and encouraged if they write in it).
+5. STRICT LENGTH LIMIT: The reply body must be strictly under 320 characters.
+
+OUTPUT FORMAT (JSON only):
+{
+  "action": "send" | "wait" | "end",
+  "body": "your reply text (only when action=send)",
+  "cta": "none" | "open_ended" | "binary_yes_stop",
+  "rationale": "short explanation of the response"
+}`;
+
 /**
  * Compose a reply for a multi-turn conversation.
  *
- * @param {object} state - Conversation state (history, contexts, signals)
- * @param {string} merchantMessage - The merchant's latest message
+ * @param {object} state - Conversation state (history, contexts, signals, isCustomerFacing)
+ * @param {string} incomingMessage - The latest message received (from merchant or customer)
  * @returns {Promise<object>} - { action, body, cta, rationale } or { action: 'wait' } or { action: 'end' }
  */
-export async function composeReply(state, merchantMessage) {
-  const { category, merchant, trigger, customer, history } = state;
+export async function composeReply(state, incomingMessage) {
+  const { category, merchant, trigger, customer, history, isCustomerFacing } = state;
+
+  const systemPrompt = isCustomerFacing ? REPLY_CUSTOMER_SYSTEM_PROMPT : REPLY_MERCHANT_SYSTEM_PROMPT;
 
   // Build context summary for reply
-  const contextSummary = `
+  let contextSummary = '';
+  if (isCustomerFacing) {
+    contextSummary = `
+MERCHANT: ${merchant?.identity?.name || 'Unknown'}, ${merchant?.identity?.city || ''}
+CATEGORY: ${category?.slug || 'unknown'}
+CUSTOMER: ${customer?.identity?.name || 'Customer'}
+CUSTOMER CONTEXT:
+- Preferences/Preferred slots: ${customer?.preferences?.preferred_slots || 'any'}
+- Relationship/Services received: ${(customer?.relationship?.services_received || []).join(', ') || 'none'}
+- Active merchant offers: ${(merchant?.offers || []).filter(o => o.status === 'active').map(o => o.title).join(', ') || 'none'}
+
+CONVERSATION SO FAR:
+${history.map(h => `  [${h.from}]: ${h.body}`).join('\n')}
+
+CUSTOMER JUST SAID: "${incomingMessage}"
+`.trim();
+  } else {
+    contextSummary = `
 MERCHANT: ${merchant?.identity?.name || 'Unknown'}, ${merchant?.identity?.city || ''}
 CATEGORY: ${category?.slug || 'unknown'}
 CONVERSATION SO FAR:
 ${history.map(h => `  [${h.from}]: ${h.body}`).join('\n')}
 
-MERCHANT JUST SAID: "${merchantMessage}"
+MERCHANT JUST SAID: "${incomingMessage}"
 
 MERCHANT CONTEXT:
 - Active offers: ${(merchant?.offers || []).filter(o => o.status === 'active').map(o => o.title).join(', ') || 'none'}
 - Signals: ${(merchant?.signals || []).join(', ')}
 - Subscription: ${merchant?.subscription?.status}, ${merchant?.subscription?.days_remaining}d left
 `.trim();
+  }
 
-  const raw = await callLLM(REPLY_SYSTEM_PROMPT, contextSummary);
+  const raw = await callLLM(systemPrompt, contextSummary);
 
   let parsed;
   try {
@@ -555,10 +602,17 @@ MERCHANT CONTEXT:
   if (!parsed) {
     return {
       action: 'send',
-      body: 'Got it! Main aapke liye check karti hoon aur update karti hoon.',
+      body: isCustomerFacing 
+        ? 'Got it! Confirming and updating details for you.' 
+        : 'Got it! Main aapke liye check karti hoon aur update karti hoon.',
       cta: 'none',
       rationale: 'Fallback reply due to parse error',
     };
+  }
+
+  // Ensure body is under 320 chars
+  if (parsed.body && parsed.body.length > 320) {
+    parsed.body = parsed.body.slice(0, 317) + '...';
   }
 
   return parsed;

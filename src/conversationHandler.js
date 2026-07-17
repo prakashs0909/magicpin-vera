@@ -26,9 +26,8 @@ const ACCEPTANCE_PATTERNS = [
 
 // Rejection / exit signals
 const REJECTION_PATTERNS = [
-  /\b(no\b|nahin|nahi|mat karo|band karo|stop\b|not interested|nahi chahiye)\b/i,
-  /\b(busy hoon|baad mein|later|abhi nahi|not now|leave me alone|pest)\b/i,
-  /\b(opt out|unsubscribe|block|remove me|mujhe mat bhejo)\b/i,
+  /\b(no\b|nahin|nahi|mat karo|band karo|stop\b|not interested|nahi chahiye|opt out|unsubscribe|block|remove me|mujhe mat bhejo|disinterest|spam|abuse)\b/i,
+  /\b(busy hoon|baad mein|later|abhi nahi|not now|leave me alone|pest|go away|don't message|dont message)\b/i,
 ];
 
 // Question patterns (merchant wants more info)
@@ -41,7 +40,10 @@ const QUESTION_PATTERNS = [/\?/, /\b(kya|kaise|kyun|kitna|kab|kaun|tell me|batao
  */
 function classifyIntent(message) {
   if (!message) return 'neutral';
-  const msg = message.trim();
+  const msg = message.trim().toLowerCase();
+
+  // Direct stop/unsubscribe check
+  if (msg === 'stop' || msg === 'unsubscribe' || msg === 'block') return 'reject';
 
   for (const pattern of ACCEPTANCE_PATTERNS) {
     if (pattern.test(msg)) return 'accept';
@@ -69,9 +71,16 @@ function classifyIntent(message) {
  * - contexts: { category, merchant, trigger, customer }
  */
 export class ConversationManager {
-  constructor(conversations) {
+  constructor(conversations, contexts) {
     // conversations is the shared Map from bot.js
     this.conversations = conversations;
+    // contexts is the shared Map from bot.js
+    this.contexts = contexts;
+  }
+
+  getCtx(scope, contextId) {
+    if (!this.contexts || !contextId) return null;
+    return this.contexts.get(`${scope}::${contextId}`)?.payload || null;
   }
 
   /**
@@ -96,17 +105,62 @@ export class ConversationManager {
    * @param {number} turnNumber
    * @returns {Promise<{ action: string, body?: string, cta?: string, wait_seconds?: number, rationale: string }>}
    */
-  async handleReply(conversationId, fromRole, message, turnNumber) {
-    const conv = this.conversations.get(conversationId);
+  async handleReply(conversationId, fromRole, message, turnNumber, merchantId = null, customerId = null) {
+    let conv = this.conversations.get(conversationId);
 
-    // Unknown conversation — create minimal state
+    // Reconstruct conversation from contexts if not found in memory
     if (!conv) {
-      return {
-        action: 'send',
-        body: 'Main samajh gayi. Aapke liye check karti hoon.',
-        cta: 'none',
-        rationale: 'Unknown conversation — generic acknowledgement',
+      const merchant = this.getCtx('merchant', merchantId);
+      if (!merchant) {
+        return {
+          action: 'send',
+          body: 'Main samajh gayi. Aapke liye check karti hoon.',
+          cta: 'none',
+          rationale: 'Unknown conversation and merchant context not found',
+        };
+      }
+      const category = this.getCtx('category', merchant.category_slug);
+      const customer = customerId ? this.getCtx('customer', customerId) : null;
+
+      // Scan for a trigger context matching this merchant (and customer if applicable)
+      let trigger = null;
+      if (this.contexts) {
+        for (const [key, ctx] of this.contexts.entries()) {
+          if (key.startsWith('trigger::')) {
+            const t = ctx.payload;
+            if (t.merchant_id === merchantId) {
+              if (!customerId || t.customer_id === customerId) {
+                trigger = t;
+                break;
+              }
+            }
+          }
+        }
+      }
+
+      conv = {
+        history: [],
+        merchantMessages: [],
+        turnCount: turnNumber - 1,
+        phase: 'pitching',
+        contexts: { category, merchant, trigger, customer }
       };
+
+      // Reconstruct history if merchant has conversation_history
+      if (merchant.conversation_history && merchant.conversation_history.length > 0) {
+        for (const h of merchant.conversation_history) {
+          conv.history.push({
+            from: h.from === 'vera' ? 'vera' : 'merchant',
+            body: h.body,
+            ts: h.ts || new Date().toISOString()
+          });
+          if (h.from !== 'vera') {
+            conv.merchantMessages.push(h.body);
+          }
+        }
+      }
+
+      this.conversations.set(conversationId, conv);
     }
 
     // Record the incoming message
@@ -116,11 +170,11 @@ export class ConversationManager {
     }
 
     // --- Guard 1: Turn budget ---
-    if (conv.turnCount >= 5) {
+    if (conv.turnCount >= 5 || turnNumber >= 5) {
       conv.phase = 'ended';
       return {
         action: 'end',
-        rationale: 'Reached 5-turn limit; gracefully exiting',
+        rationale: `Reached turn limit (turnCount: ${conv.turnCount}, turnNumber: ${turnNumber}); gracefully exiting`,
       };
     }
 
@@ -129,10 +183,43 @@ export class ConversationManager {
       return { action: 'end', rationale: 'Conversation already ended' };
     }
 
+    // --- Customer reply path ---
+    if (fromRole === 'customer') {
+      conv.turnCount++;
+      const replyResult = await composeReply(
+        {
+          ...conv.contexts,
+          history: conv.history,
+          isCustomerFacing: true,
+        },
+        message
+      );
+
+      if (replyResult.action === 'end') {
+        conv.phase = 'ended';
+        return {
+          action: 'end',
+          rationale: replyResult.rationale || 'Customer conversation concluded',
+        };
+      }
+
+      const body = replyResult.body || 'Got it!';
+      conv.history.push({ from: 'vera', body, ts: new Date().toISOString() });
+
+      return {
+        action: 'send',
+        body,
+        cta: replyResult.cta || 'none',
+        rationale: replyResult.rationale || 'Replied to customer',
+      };
+    }
+
+    // --- Merchant reply path ---
+
     // --- Guard 3: Auto-reply detection ---
     const autoReplyResult = detectAutoReply(message, conv.merchantMessages.slice(0, -1));
     if (autoReplyResult.isAutoReply) {
-      if (shouldExitConversation(conv.merchantMessages)) {
+      if (turnNumber >= 3 || shouldExitConversation(conv.merchantMessages)) {
         // Already tried once after auto-reply — exit
         conv.phase = 'ended';
         const exitMsg = conv.contexts?.merchant?.identity?.name
@@ -141,7 +228,7 @@ export class ConversationManager {
         conv.history.push({ from: 'vera', body: exitMsg, ts: new Date().toISOString() });
         return {
           action: 'end',
-          rationale: `Auto-reply detected (confidence: ${autoReplyResult.confidence}) — graceful exit after retry`,
+          rationale: `Auto-reply detected (confidence: ${autoReplyResult.confidence}, turn: ${turnNumber}) — graceful exit`,
         };
       } else {
         // First auto-reply detected — try once more with a clarifying message
@@ -152,7 +239,7 @@ export class ConversationManager {
           action: 'send',
           body: retryMsg,
           cta: 'open_ended',
-          rationale: `Auto-reply detected (confidence: ${autoReplyResult.confidence}) — attempting once more with clarification`,
+          rationale: `Auto-reply detected (confidence: ${autoReplyResult.confidence}, turn: ${turnNumber}) — attempting once more with clarification`,
         };
       }
     }
@@ -181,6 +268,7 @@ export class ConversationManager {
       {
         ...conv.contexts,
         history: conv.history,
+        isCustomerFacing: false,
       },
       message
     );

@@ -45,7 +45,7 @@ const conversations = new Map();
  */
 const suppressionKeys = new Set();
 
-const conversationManager = new ConversationManager(conversations);
+const conversationManager = new ConversationManager(conversations, contexts);
 
 // ---------------------------------------------------------------------------
 // HELPERS
@@ -258,7 +258,9 @@ app.post('/v1/reply', async (req, res) => {
       conversation_id,
       from_role,
       message,
-      turn_number || 1
+      turn_number || 1,
+      merchant_id,
+      customer_id
     );
 
     return res.json(result);
