@@ -124,7 +124,15 @@ export class ConversationManager {
 
       // Scan for a trigger context matching this merchant (and customer if applicable)
       let trigger = null;
-      if (this.contexts) {
+      let triggerId = null;
+      if (conversationId.startsWith(`conv_${merchantId}_`)) {
+        triggerId = conversationId.substring(`conv_${merchantId}_`.length);
+      }
+      if (triggerId) {
+        trigger = this.getCtx('trigger', triggerId);
+      }
+
+      if (!trigger && this.contexts) {
         for (const [key, ctx] of this.contexts.entries()) {
           if (key.startsWith('trigger::')) {
             const t = ctx.payload;
@@ -147,7 +155,7 @@ export class ConversationManager {
       };
 
       // Reconstruct history if merchant has conversation_history
-      if (merchant.conversation_history && merchant.conversation_history.length > 0) {
+      if (Array.isArray(merchant.conversation_history) && merchant.conversation_history.length > 0) {
         for (const h of merchant.conversation_history) {
           conv.history.push({
             from: h.from === 'vera' ? 'vera' : 'merchant',
@@ -186,11 +194,66 @@ export class ConversationManager {
     // --- Customer reply path ---
     if (fromRole === 'customer') {
       conv.turnCount++;
+
+      // Slot selection detection
+      let selectedSlot = null;
+      const slots = conv.contexts?.trigger?.payload?.available_slots;
+      if (Array.isArray(slots) && slots.length > 0) {
+        const msgLower = message.trim().toLowerCase();
+
+        // Match option index/number first
+        if (/^\s*1\s*$/.test(msgLower) || /\b(first|option 1|slot 1|1st|one)\b/i.test(msgLower)) {
+          selectedSlot = slots[0];
+        } else if (/^\s*2\s*$/.test(msgLower) || /\b(second|option 2|slot 2|2nd|two)\b/i.test(msgLower)) {
+          selectedSlot = slots[1];
+        } else if (/^\s*3\s*$/.test(msgLower) || /\b(third|option 3|slot 3|3rd|three)\b/i.test(msgLower)) {
+          selectedSlot = slots[2];
+        }
+
+        // Match keywords/labels if index did not match
+        if (!selectedSlot) {
+          for (const slot of slots) {
+            if (slot.label) {
+              const labelLower = slot.label.toLowerCase();
+              const terms = labelLower.split(/[\s,.-]+/).filter(t => t.length > 1);
+              const hasTime = labelLower.match(/\b\d+(?:am|pm)\b/i);
+              const hasDate = labelLower.match(/\b\d+\s+[a-z]{3}\b/i);
+
+              let matchesAll = false;
+              if (hasTime && hasDate) {
+                const timeStr = hasTime[0].toLowerCase();
+                const dateStr = hasDate[0].toLowerCase();
+                if (msgLower.includes(timeStr) && msgLower.includes(dateStr)) {
+                  matchesAll = true;
+                }
+              }
+              if (!matchesAll && terms.length > 0) {
+                let matchCount = 0;
+                for (const term of terms) {
+                  if (msgLower.includes(term)) {
+                    matchCount++;
+                  }
+                }
+                if (matchCount >= 2) {
+                  matchesAll = true;
+                }
+              }
+
+              if (matchesAll) {
+                selectedSlot = slot;
+                break;
+              }
+            }
+          }
+        }
+      }
+
       const replyResult = await composeReply(
         {
           ...conv.contexts,
           history: conv.history,
           isCustomerFacing: true,
+          selectedSlot,
         },
         message
       );

@@ -69,7 +69,7 @@ export function detectAutoReply(message, history = []) {
   }
 
   // --- Signal 2: Message verbatim repeat (same text sent 2+ times before) ---
-  const repeatCount = history.filter(h => h.trim() === msg.trim()).length;
+  const repeatCount = history.filter(h => typeof h === 'string' && h.trim() === msg.trim()).length;
   const isVerbatimRepeat = repeatCount >= 1; // sent same text before
 
   // --- Signal 3: No genuine engagement signals ---

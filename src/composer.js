@@ -12,7 +12,7 @@
  */
 
 import 'dotenv/config';
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from '@google/generative-ai';
 
 // ---------------------------------------------------------------------------
 // LLM CLIENT SETUP
@@ -28,6 +28,24 @@ async function callLLM(systemPrompt, userPrompt) {
       responseMimeType: 'application/json',
     },
     systemInstruction: systemPrompt,
+    safetySettings: [
+      {
+        category: HarmCategory.HARM_CATEGORY_HARASSMENT,
+        threshold: HarmBlockThreshold.BLOCK_NONE,
+      },
+      {
+        category: HarmCategory.HARM_CATEGORY_HATE_SPEECH,
+        threshold: HarmBlockThreshold.BLOCK_NONE,
+      },
+      {
+        category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
+        threshold: HarmBlockThreshold.BLOCK_NONE,
+      },
+      {
+        category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
+        threshold: HarmBlockThreshold.BLOCK_NONE,
+      },
+    ],
   });
 
   const result = await model.generateContent(userPrompt);
@@ -549,7 +567,7 @@ OUTPUT FORMAT (JSON only):
  * @returns {Promise<object>} - { action, body, cta, rationale } or { action: 'wait' } or { action: 'end' }
  */
 export async function composeReply(state, incomingMessage) {
-  const { category, merchant, trigger, customer, history, isCustomerFacing } = state;
+  const { category, merchant, trigger, customer, history, isCustomerFacing, selectedSlot } = state;
 
   const systemPrompt = isCustomerFacing ? REPLY_CUSTOMER_SYSTEM_PROMPT : REPLY_MERCHANT_SYSTEM_PROMPT;
 
@@ -559,11 +577,16 @@ export async function composeReply(state, incomingMessage) {
     contextSummary = `
 MERCHANT: ${merchant?.identity?.name || 'Unknown'}, ${merchant?.identity?.city || ''}
 CATEGORY: ${category?.slug || 'unknown'}
+CATEGORY VOICE: Tone = ${category?.voice?.tone || 'warm_lifestyle'}, Code-mix = ${category?.voice?.code_mix || 'hindi_english_natural'}, Taboos = ${(category?.voice?.vocab_taboo || []).join(', ')}
 CUSTOMER: ${customer?.identity?.name || 'Customer'}
 CUSTOMER CONTEXT:
 - Preferences/Preferred slots: ${customer?.preferences?.preferred_slots || 'any'}
 - Relationship/Services received: ${(customer?.relationship?.services_received || []).join(', ') || 'none'}
 - Active merchant offers: ${(merchant?.offers || []).filter(o => o.status === 'active').map(o => o.title).join(', ') || 'none'}
+
+ACTIVE TRIGGER KIND: ${trigger?.kind || 'none'}
+ACTIVE TRIGGER PAYLOAD: ${JSON.stringify(trigger?.payload || {})}
+SELECTED SLOT (IF ANY): ${selectedSlot ? JSON.stringify(selectedSlot) : 'none'}
 
 CONVERSATION SO FAR:
 ${history.map(h => `  [${h.from}]: ${h.body}`).join('\n')}
@@ -574,15 +597,22 @@ CUSTOMER JUST SAID: "${incomingMessage}"
     contextSummary = `
 MERCHANT: ${merchant?.identity?.name || 'Unknown'}, ${merchant?.identity?.city || ''}
 CATEGORY: ${category?.slug || 'unknown'}
-CONVERSATION SO FAR:
-${history.map(h => `  [${h.from}]: ${h.body}`).join('\n')}
-
-MERCHANT JUST SAID: "${incomingMessage}"
+CATEGORY VOICE: Tone = ${category?.voice?.tone || 'peer_clinical'}, Code-mix = ${category?.voice?.code_mix || 'hindi_english_natural'}, Taboos = ${(category?.voice?.vocab_taboo || []).join(', ')}
+CATEGORY GUIDELINES/DIGEST/REGULATIONS:
+${JSON.stringify(category?.digest || [])}
 
 MERCHANT CONTEXT:
 - Active offers: ${(merchant?.offers || []).filter(o => o.status === 'active').map(o => o.title).join(', ') || 'none'}
 - Signals: ${(merchant?.signals || []).join(', ')}
 - Subscription: ${merchant?.subscription?.status}, ${merchant?.subscription?.days_remaining}d left
+
+ACTIVE TRIGGER KIND: ${trigger?.kind || 'none'}
+ACTIVE TRIGGER PAYLOAD: ${JSON.stringify(trigger?.payload || {})}
+
+CONVERSATION SO FAR:
+${history.map(h => `  [${h.from}]: ${h.body}`).join('\n')}
+
+MERCHANT JUST SAID: "${incomingMessage}"
 `.trim();
   }
 
